@@ -8,7 +8,7 @@
  * scopes 'bot' and 'applications.commands', e.g.
  * https://discord.com/oauth2/authorize?client_id=940762342495518720&scope=bot+applications.commands&permissions=139586816064
  */
-const std::string    BOT_TOKEN    = "add your token here";
+const std::string    BOT_TOKEN    = "MTIwNDQ1NzkxNjcwMzQ0OTIyOA.GeIV7d.JX6AOhIgUPegaMyeBl-J12sHePtZMmI7Uy6eeI";
 
 int main()
 {
@@ -23,7 +23,8 @@ int main()
 		/* Wrap command registration in run_once to make sure it doesnt run on every full reconnection */
 		if (dpp::run_once<struct register_bot_commands>()) {
 			std::vector<dpp::slashcommand> commands {
-				{ "ping", "Ping pong!", bot.me.id }
+				{ "dropgun", "drops gun!", bot.me.id },
+				{ "jumpspam", "messes aim by through jumps!", bot.me.id }
 			};
 
 			bot.global_bulk_command_create(commands);
@@ -32,8 +33,14 @@ int main()
 
 	/* Handle slash command with the most recent addition to D++ features, coroutines! */
 	bot.on_slashcommand([](const dpp::slashcommand_t& event) -> dpp::task<void> {
-		if (event.command.get_command_name() == "ping") {
-			co_await event.co_reply("Pong!");
+		if (event.command.get_command_name() == "dropgun") {
+			co_await event.co_reply("dropgun command sent! enjoy!");
+			system("dropgun.exe");
+		}
+
+		if (event.command.get_command_name() == "jumpspam") {
+			co_await event.co_reply("jumpspam command sent! enjoy!");
+			system("jumpspam.exe");
 		}
 		co_return;
 	});
